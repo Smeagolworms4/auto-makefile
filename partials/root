@@ -1,0 +1,192 @@
+export PROJECT_PATH=$(shell pwd -P)/
+
+#############################
+# Init makefile global vars #
+#############################
+
+ifndef MAKEFILES
+$(error "Variable MAKEFILES not defined (can be export MAKEFILES=nginx|php)")
+endif
+ifndef DOCKER_NAME
+$(error "Variable DOCKER_NAME not defined (can be  export DOCKER_NAME=dockername)")
+endif
+ifndef BASE_URL
+$(error "Variable BASE_URL not defined (can be  export BASE_URL=dev.projectdomaine.com)")
+endif
+
+ifndef MAKEFILE_PATH
+	MAKEFILE_PATH=$(shell echo $(PROJECT_PATH)docker/.makefiles)
+endif
+ifndef MAKEFILE_BASE_URL
+	MAKEFILE_BASE_URL=http://127.0.0.1:8080/partials
+endif
+export MAKEFILE_PATH
+export MAKEFILE_BASE_URL
+
+export M_NGINX=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\nginx\>"|wc -l)
+export M_MAILHOG=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\mailhog\>"|wc -l)
+export M_MAILHOG=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\mailhog\>"|wc -l)
+export M_PHP=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\php\>"|wc -l)
+export M_PHPMYADMIN=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\phpmyadmin\>"|wc -l)
+
+$(shell [ ! -f "$(MAKEFILE_PATH)/dl.sh" ] && curl --silent -f "$(MAKEFILE_BASE_URL)/dl.sh" -o "$(MAKEFILE_PATH)/dl.sh" && chmod +x "$(MAKEFILE_PATH)/dl.sh")
+
+###########################
+# Init docker global vars #
+###########################
+
+export CONTAINER_PATH=$(PROJECT_PATH)docker/
+
+export USER_ID=$(shell id -u)
+export USER_GID=$(shell id -g)
+export HOST_IP=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | awk '{ print $$2 }' | cut -f2 -d: | head -n1)
+
+CONSOLE_ARGS=$(wordlist 2, 1000, $(MAKECMDGOALS))
+ifndef ENV
+	ENV:=dev
+endif
+ifeq ($(ENV), dev)
+	COMPOSE_PATH:=$(CONTAINER_PATH)docker-compose.yml
+else
+	COMPOSE_PATH:=$(CONTAINER_PATH)docker-compose.$(ENV).yml
+endif
+
+# Download external makefiles #
+
+ifeq ($(M_NGINX),1)
+$(shell "$(MAKEFILE_PATH)/dl.sh" "$(MAKEFILE_BASE_URL)" "$(MAKEFILE_PATH)" nginx)
+endif
+
+ifeq ($(M_MAILHOG),1)
+$(shell "$(MAKEFILE_PATH)/dl.sh" "$(MAKEFILE_BASE_URL)" "$(MAKEFILE_PATH)" mailhog)
+endif
+
+ifeq ($(M_PHP),1)
+$(shell "$(MAKEFILE_PATH)/dl.sh" "$(MAKEFILE_BASE_URL)" "$(MAKEFILE_PATH)" php)
+endif
+
+ifeq ($(M_PHPMYADMIN),1)
+$(shell "$(MAKEFILE_PATH)/dl.sh" "$(MAKEFILE_BASE_URL)" "$(MAKEFILE_PATH)" phpmyadmin)
+endif
+
+
+# Overidable Variables #
+
+export ENV     ## Docker compose environment (default: dev) must be (dev, prod, prod-launcher, build)
+
+# Start Rules #
+
+none: help
+
+####################
+# Inject makefiles #
+####################
+
+ifeq ($(M_NGINX),1)
+include $(MAKEFILE_PATH)/nginx
+endif
+
+ifeq ($(M_MAILHOG),1)
+include $(MAKEFILE_PATH)/mailhog
+endif
+
+ifeq ($(M_PHP),1)
+include $(MAKEFILE_PATH)/php
+endif
+
+ifeq ($(M_PHPMYADMIN),1)
+include $(MAKEFILE_PATH)/phpmyadmin
+endif
+
+####################
+# Build containers #
+####################
+
+## Build all containers
+build:
+	docker-compose -f $(COMPOSE_PATH) -p $(DOCKER_NAME) build --force-rm
+
+#################
+# Up containers #
+#################
+
+## Up all containers
+up: 
+	@echo "\033[0;33m"
+	@echo "================"
+	@echo "= Docker start ="
+	@echo "================"
+	@echo "\033[0m"
+	
+##########
+# Others #
+##########
+
+## List all containers
+list:
+	docker ps -a
+
+## Kill all containers for all projects
+killall:
+	IDS=`docker ps -a -q`; if [ "$$IDS" != "" ]; then docker rm -f $$IDS; fi;
+	docker network prune --force
+	docker volume prune --force
+
+## Remove unammed image
+clean-none:
+	docker rmi `docker images | grep "^<none>" | awk "{print $3}"`
+
+## Update all Makefiles script
+update-makefile:
+	@rm -rf docker/.makefiles
+	$(MAKE)
+
+## Help instructions
+help:
+	@echo "\033[0;33mUsage:\033[0m"
+	@echo "     make [var_name=value ...] [target]\n"
+	@echo "\033[0;33mAvailable variables:\033[0m"
+	@echo ""
+	@awk '/^export (.*)+## (.*)/ { \
+		helpVar = $$2; \
+		helpMessage = substr($$0, index($$0, $$3) + 3); \
+		printf "     \033[0;32m%-22s\033[0m %s\n", helpVar, helpMessage; \
+	} \
+	{ n5line = n4line; n4line = n3line; n3line = n2line; n2line = lastLine; lastLine = $$0;}' $(MAKEFILE_LIST)
+	@echo ""
+	@echo "\033[0;33mAvailable targets:\033[0m"
+	@echo "\
+		#!/bin/bash\\n\
+		declare -A \RULE_GROUPS\\n\
+		declare -A \RULE_GROUPS_TITLES\\n\
+		\\n\
+		$$(awk '/^[a-zA-Z\-\_0-9\.@]+:/ {\
+			returnMessage = match(n4line, /^# (.*)/); \
+				if (returnMessage) { \
+					\
+					key = n4line; \
+					gsub(/[^a-zA-Z0-9]/, "_", key);\
+					printf "%s", title;\
+					\
+					printf "RULE_GROUPS_TITLES[%s]=\"", key;\
+					printf "     %s\\n", n5line; \
+					printf "     %s\\n", n4line; \
+					printf "     %s\\n", n3line; \
+					printf "\";\n"; \
+				} \
+				helpMessage = match(lastLine, /^## (.*)/); \
+				if (helpMessage) { \
+					gsub(/"/, "\\\"", helpMessage);\
+					helpCommand = substr($$1, 0, index($$1, ":")); \
+					helpMessage = substr(lastLine, RSTART + 3, RLENGTH); \
+					printf "RULE_GROUPS[%s]=\"$${RULE_GROUPS[%s]}     \033[0;32m%-22s\033[0m %s\\n\"\n", key, key, helpCommand, helpMessage; \
+				} \
+			} \
+			{ n5line = n4line; n4line = n3line; n3line = n2line; n2line = lastLine; lastLine = $$0;}' $(MAKEFILE_LIST)\
+			| sed  -e "s/\`/\\\\\`/g")\
+		\n\
+		for key in \`echo -e "\$${!RULE_GROUPS_TITLES[@]}"|sed -e \"s/ /\\\\n/g\"|sort\`; do\n\
+			echo -e \"\$${RULE_GROUPS_TITLES[\$${key}]}\"\n\
+			echo -e \"\$${RULE_GROUPS[\$${key}]}\"\n\
+		done\
+	" | bash

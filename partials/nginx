@@ -1,0 +1,22 @@
+
+# Overidable Variables #
+
+ifndef HTTP_PORT
+	HTTP_PORT:=80
+endif
+ifndef HTTPS_PORT
+	HTTPS_PORT:=443
+endif
+
+export HTTP_PORT         ## HTTP port (default: 80)
+export HTTPS_PORT        ## HTTPS port (default 443)
+
+# Start Rules #
+
+####################
+# Build containers #
+####################
+
+## Build `nginx` container
+build-nginx:
+	docker-compose -f $(COMPOSE_PATH) -p $(DOCKER_NAME) build --force-rm nginx

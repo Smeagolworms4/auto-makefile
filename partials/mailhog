@@ -1,0 +1,10 @@
+
+# Overidable Variables #
+
+ifndef MAILHOG_PORT
+	MAILHOG_PORT:=8083
+endif
+
+export MAILHOG_PORT      ## Mailhog port (default: 8083)
+
+# Start Rules #

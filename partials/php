@@ -1,0 +1,8 @@
+
+####################
+# Build containers #
+####################
+
+## Build `php` container
+build-php:
+	docker-compose -f $(COMPOSE_PATH) -p $(DOCKER_NAME) build --force-rm php
