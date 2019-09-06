@@ -1,4 +1,4 @@
-export PROJECT_PATH=$(shell pwd -P)/
+-L export PROJECT_PATH=$(shell pwd -P)/
 
 #############################
 # Init makefile global vars #
@@ -29,7 +29,7 @@ export M_MAILHOG=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\mailhog\>"|w
 export M_PHP=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\php\>"|wc -l)
 export M_PHPMYADMIN=$(shell echo "$(MAKEFILES)" | tr "|" "\n" | grep "\phpmyadmin\>"|wc -l)
 
-$(shell [ ! -f "$(MAKEFILE_PATH)/dl.sh" ] && curl --silent -f "$(MAKEFILE_BASE_URL)/dl.sh" -o "$(MAKEFILE_PATH)/dl.sh" && chmod +x "$(MAKEFILE_PATH)/dl.sh")
+$(shell [ ! -f "$(MAKEFILE_PATH)/dl.sh" ] && curl -L --silent -f "$(MAKEFILE_BASE_URL)/dl.sh" -o "$(MAKEFILE_PATH)/dl.sh" && chmod +x "$(MAKEFILE_PATH)/dl.sh")
 
 ###########################
 # Init docker global vars #
