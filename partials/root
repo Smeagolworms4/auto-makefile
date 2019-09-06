@@ -18,7 +18,7 @@ ifndef MAKEFILE_PATH
 	MAKEFILE_PATH=$(shell echo $(PROJECT_PATH)docker/.makefiles)
 endif
 ifndef MAKEFILE_BASE_URL
-	MAKEFILE_BASE_URL=https://github.com/Smeagolworms4/auto-makefile/raw/master/
+	MAKEFILE_BASE_URL=https://github.com/Smeagolworms4/auto-makefile/raw/master/partials/
 endif
 export MAKEFILE_PATH
 export MAKEFILE_BASE_URL
