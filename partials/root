@@ -1,4 +1,4 @@
--L export PROJECT_PATH=$(shell pwd -P)/
+export PROJECT_PATH=$(shell pwd -P)/
 
 #############################
 # Init makefile global vars #
