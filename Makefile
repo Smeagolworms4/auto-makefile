@@ -1,2 +1,17 @@
-$(shell [ ! -f docker/.makefiles/root ] && mkdir -p docker/.makefiles && curl -L --silent -f http://127.0.0.1:8080/partials/root -o docker/.makefiles/root) 
-include docker/.makefiles/root
+export MAKEFILE_URL=https://raw.githubusercontent.com/Smeagolworms4/auto-makefile/master
+export IMPORT_MK=$(MAKEFILE_URL)/docker.mk
+
+#####################
+# External resource #
+#####################
+$(shell [ ! -f .makefiles/index.mk ] && mkdir -p .makefiles && curl -L --silent -f $(IMPORT_MK) -o .makefiles/index.mk) 
+include .makefiles/index.mk
+
+##########
+# Custom #
+##########
+
+## My custom rule
+#hello-world:
+#	echo Hello world
+
