@@ -13,17 +13,16 @@ include $(MAKEFILE_LIB_DIR)/root.mk
 # Docker #
 ##########
 
-.PHONY: list
 ## List all containers
 list: $(RULE_DEP_LIST)
-	$(RULE_CMD_LIST)
+	docker ps -a
 
-.PHONY: killall
 ## Kill all containers for all projects
 killall: $(RULE_DEP_KILLALL)
-	$(RULE_CMD_KILLALL)
+	IDS=`docker ps -a -q`; if [ "$$IDS" != "" ]; then docker rm -f $$IDS; fi;
+	docker network prune --force
+	docker volume prune --force
 
-.PHONY: clean-none
 ## Remove unammed image
 clean-none: $(RULE_DEP_CLEANNONE)
-	$(RULE_CMD_CLEANNONE)
+	docker rmi `docker images | grep "^<none>" | awk "{print $3}"`
