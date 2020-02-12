@@ -16,11 +16,13 @@ export ENV ## Application environment (default: dev)
 # Others #
 ##########
 
+.PHONY: update-makefile
 ## Update all Makefiles script
 update-makefile: $(RULE_DEP_UPDAATE_MAKEFILE)
 	@rm -rfv "$(MAKEFILE_LIB_DIR)"
 	@$(MAKE)
 	
+.PHONY: help
 ## Help instructions
 help: $(RULE_DEP_HELP)
 	@echo "\033[0;33mUsage:\033[0m"

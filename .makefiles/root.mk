@@ -17,12 +17,12 @@ export ENV ## Application environment (default: dev)
 ##########
 
 ## Update all Makefiles script
-update-makefile:
+update-makefile: $(RULE_DEP_UPDAATE_MAKEFILE)
 	@rm -rfv "$(MAKEFILE_LIB_DIR)"
 	@$(MAKE)
 	
 ## Help instructions
-help:
+help: $(RULE_DEP_HELP)
 	@echo "\033[0;33mUsage:\033[0m"
 	@echo "     make [var_name=value ...] [target]\n"
 	@echo "\033[0;33mAvailable variables:\033[0m"
