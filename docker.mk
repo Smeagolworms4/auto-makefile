@@ -1,7 +1,7 @@
 export MAKEFILE_LIB_DIR=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ifndef MAKEFILE_URL
-	export MAKEFILE_URL=https://raw.githubusercontent.com/Smeagolworms4/auto-makefile/master
+	export MAKEFILE_URL=127.0.0.1
 endif
 
 # ROOT #

@@ -17,6 +17,6 @@ include .makefiles/index.mk
 ##########
 
 ## My custom rule
-#hello-world:
-#	echo Hello world
+hello-world:
+	echo Hello world
 
