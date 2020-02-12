@@ -18,7 +18,7 @@ export RULE_CMD_CLEANNONE=docker rmi `docker images | grep "^<none>" | awk "{pri
 ##########
 # Docker #
 ##########
-
+.PHONY: list
 ## List all containers
 list: $(RULE_DEP_LIST)
 	$(RULE_CMD_LIST)

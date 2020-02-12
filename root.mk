@@ -15,7 +15,6 @@ export ENV ## Application environment (default: dev)
 ##########
 # Others #
 ##########
-
 .PHONY: update-makefile
 ## Update all Makefiles script
 update-makefile: $(RULE_DEP_UPDAATE_MAKEFILE)
