@@ -1,3 +1,8 @@
+#######################
+# EXEMPLE OF MAKEFILE #
+#######################
+
+
 export MAKEFILE_URL=https://raw.githubusercontent.com/Smeagolworms4/auto-makefile/master
 export IMPORT_MK=$(MAKEFILE_URL)/docker.mk
 
