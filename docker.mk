@@ -5,7 +5,7 @@ ifndef MAKEFILE_URL
 endif
 
 # ROOT #
-$(shell [ ! -f $(MAKEFILE_LIB_DIR)/root.mk ] && curl -L --silent -f http://127.0.0.1:8383/root.mk -o $(MAKEFILE_LIB_DIR)/root.mk) 
+$(shell [ ! -f $(MAKEFILE_LIB_DIR)/root.mk ] && curl -L --silent -f $(MAKEFILE_URL)/root.mk -o $(MAKEFILE_LIB_DIR)/root.mk) 
 include $(MAKEFILE_LIB_DIR)/root.mk
 
 	
