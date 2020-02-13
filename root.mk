@@ -8,6 +8,13 @@ endif
 
 export ENV ## Application environment (default: dev)
 
+
+ifndef RULE_CMD_UPDATE_MAKEFILE
+export RULE_CMD_UPDATE_MAKEFILE=\
+@rm -rfv "$(MAKEFILE_LIB_DIR)";\
+@$(MAKE)
+endif
+
 # Start Rules #
 
 .DEFAULT_GOAL:=help
@@ -17,9 +24,8 @@ export ENV ## Application environment (default: dev)
 ##########
 .PHONY: update-makefile
 ## Update all Makefiles script
-update-makefile: $(RULE_DEP_UPDAATE_MAKEFILE)
-	@rm -rfv "$(MAKEFILE_LIB_DIR)"
-	@$(MAKE)
+update-makefile: $(RULE_DEP_UPDATE_MAKEFILE)
+	$(RULE_CMD_UPDATE_MAKEFILE)
 	
 .PHONY: help
 ## Help instructions

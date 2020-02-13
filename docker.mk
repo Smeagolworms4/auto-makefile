@@ -8,12 +8,22 @@ endif
 $(shell [ ! -f $(MAKEFILE_LIB_DIR)/root.mk ] && curl -L --silent -f $(MAKEFILE_URL)/root.mk -o $(MAKEFILE_LIB_DIR)/root.mk) 
 include $(MAKEFILE_LIB_DIR)/root.mk
 
+ifndef RULE_CMD_LIST
 export RULE_CMD_LIST=docker ps -a
+endif
+
+ifndef RULE_CMD_KILLALL
 export RULE_CMD_KILLALL=\
 IDS=`docker ps -a -q`; if [ "$$IDS" != "" ]; then docker rm -f $$IDS; fi;\
 docker network prune --force;\
 docker volume prune --force
+endif
+
+ifndef RULE_CMD_CLEANNONE
 export RULE_CMD_CLEANNONE=docker rmi `docker images | grep "^<none>" | awk "{print $3}"`
+endif
+
+# Start Rules #
 	
 ##########
 # Docker #
