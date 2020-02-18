@@ -12,7 +12,7 @@ export ENV ## Application environment (default: dev)
 ifndef RULE_CMD_UPDATE_MAKEFILE
 export RULE_CMD_UPDATE_MAKEFILE=\
 @rm -rfv "$(MAKEFILE_LIB_DIR)";\
-@$(MAKE)
+$(MAKE)
 endif
 
 # Start Rules #
