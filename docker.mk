@@ -20,7 +20,7 @@ docker volume prune --force
 endif
 
 ifndef RULE_CMD_CLEANNONE
-export RULE_CMD_CLEANNONE=docker rmi `docker images | grep "^<none>" | awk "{print $3}"`
+export RULE_CMD_CLEANNONE=docker rmi `docker images | grep "^<none>" | awk '{print $$3}'`
 endif
 
 # Start Rules #
