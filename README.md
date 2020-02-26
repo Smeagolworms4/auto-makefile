@@ -20,6 +20,9 @@ export IMPORT_MK=root.mk
 $(shell [ ! -f .makefiles/index.mk ] && mkdir -p .makefiles && curl -L --silent -f $(MAKEFILE_URL)/$(IMPORT_MK) -o .makefiles/index.mk) 
 include .makefiles/index.mk
 
+export CUSTOM_VAR  ## My custom variable 1
+export CUSTOM_VAR2 ## My custom variable 2
+
 ##########
 # Custom #
 ##########
