@@ -48,7 +48,7 @@ help: $(RULE_DEP_HELP)
 		declare -A \RULE_GROUPS\\n\
 		declare -A \RULE_GROUPS_TITLES\\n\
 		\\n\
-		$$(awk '/^[a-zA-Z\-\_0-9\.@]+:/ {\
+		$$(awk '/^[a-zA-Z\-_0-9\.@]+:/ {\
 			returnMessage = match(n4line, /^# (.*)/); \
 				if (returnMessage) { \
 					\
