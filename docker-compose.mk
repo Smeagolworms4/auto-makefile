@@ -5,7 +5,7 @@ ifndef MAKEFILE_URL
 endif
 
 # ROOT #
-$(shell [ ! -f $(MAKEFILE_LIB_DIR)/docker.mk ] && curl -L --silent -f $(MAKEFILE_URL)/root.mk -o $(MAKEFILE_LIB_DIR)/docker.mk) 
+$(shell [ ! -f $(MAKEFILE_LIB_DIR)/docker.mk ] && curl -L --silent -f $(MAKEFILE_URL)/docker.mk -o $(MAKEFILE_LIB_DIR)/docker.mk) 
 include $(MAKEFILE_LIB_DIR)/docker.mk
 
 ifndef DOCKER_PATH
