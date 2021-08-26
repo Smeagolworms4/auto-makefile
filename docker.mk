@@ -30,15 +30,18 @@ endif
 ##########
 .PHONY: list
 ## List all containers
-list: $(RULE_DEP_LIST)
+list:
+	@if [ "$(RULE_DEP_LIST)" != "" ]; then make $(RULE_DEP_LIST); fi
 	$(RULE_CMD_LIST)
 
 .PHONY: killall
 ## Kill all containers for all projects
-killall: $(RULE_DEP_KILLALL)
+killall:
+	@if [ "$(RULE_DEP_KILLALL)" != "" ]; then make $(RULE_DEP_KILLALL); fi
 	$(RULE_CMD_KILLALL)
 
 .PHONY: clean-none
 ## Remove unammed image
-clean-none: $(RULE_DEP_CLEANNONE)
+clean-none:
+	@if [ "$(RULE_DEP_CLEANNONE)" != "" ]; then make $(RULE_DEP_CLEANNONE); fi
 	$(RULE_CMD_CLEANNONE)
