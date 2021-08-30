@@ -6,6 +6,14 @@ ifndef ENV
 	ENV:=dev
 endif
 
+ifndef USER_ID
+	export USER_ID=$(shell id -u)
+endif
+
+ifndef USER_GID
+	export USER_GID=$(shell id -g)
+endif
+
 export ENV ## Application environment (default: dev)
 
 
