@@ -14,6 +14,8 @@ ifndef USER_GID
 	export USER_GID=$(shell id -g)
 endif
 
+export USER_ID ## User id (default: current user id)
+export USER_GID ## Default user group id (default: current default user group id)
 export ENV ## Application environment (default: dev)
 
 
