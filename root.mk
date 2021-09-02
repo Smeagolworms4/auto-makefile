@@ -6,6 +6,19 @@ ifndef ENV
 	ENV:=dev
 endif
 
+ifeq ($(shell test -f .env && echo -n yes),yes) 
+    include .env
+    export $(shell sed 's/=.*//' .env)
+endif
+
+ifneq ($(ENV), dev)
+    ifeq ($(shell test -f .env.$(ENV) && echo -n yes),yes) 
+        include .env.$(ENV)
+        export $(shell sed 's/=.*//' .env.$(ENV))
+    endif
+endif
+
+
 ifndef USER_ID
 	export USER_ID=$(shell id -u)
 endif
