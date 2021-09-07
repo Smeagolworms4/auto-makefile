@@ -47,14 +47,12 @@ endif
 ##########
 .PHONY: update-makefile
 ## Update all Makefiles script
-update-makefile:
-	@if [ "$(RULE_DEP_UPDATE_MAKEFILE)" != "" ]; then make $(RULE_DEP_UPDATE_MAKEFILE); fi
+update-makefile: $(RULE_DEP_UPDATE_MAKEFILE)
 	$(RULE_CMD_UPDATE_MAKEFILE)
 	
 .PHONY: help
 ## Help instructions
-help:
-	@if [ "$(RULE_DEP_HELP)" != "" ]; then make $(RULE_DEP_HELP); fi
+help: $(RULE_DEP_HELP)
 	@echo "\033[0;33mUsage:\033[0m"
 	@echo "     make [var_name=value ...] [target]\n"
 	@echo "\033[0;33mAvailable variables:\033[0m"
