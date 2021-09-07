@@ -1,5 +1,5 @@
 # Inits params #
-export PROJECT_PATH=$(shell pwd -P)/
+export PROJECT_PATH:=$(shell pwd -P)/
 export MAKEFILE_LIB_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ifndef ENV
