@@ -59,8 +59,7 @@ endif
 ##########
 
 ## Pull latest docker images
-docker-pull:
-	@if [ "$(RULE_DEP_DOCKER_PULL)" != "" ]; then make $(RULE_DEP_DOCKER_PULL); fi
+docker-pull: $(RULE_DEP_DOCKER_PULL)
 	$(RULE_CMD_DOCKER_PULL)
 
 #################
@@ -68,8 +67,7 @@ docker-pull:
 #################
 
 ## Up all containers
-up:
-	@if [ "$(RULE_DEP_UP)" != "" ]; then make $(RULE_DEP_UP); fi
+up: $(RULE_DEP_UP)
 	$(RULE_CMD_UP)
 
 ###################
@@ -77,8 +75,7 @@ up:
 ###################
 
 ## Down all containers
-down:
-	@if [ "$(RULE_DEP_DOWN)" != "" ]; then make $(RULE_DEP_DOWN); fi
+down: $(RULE_DEP_DOWN)
 	$(RULE_CMD_DOWN)
 
 ###################
@@ -86,6 +83,5 @@ down:
 ###################
 
 ## Display logs all containers
-logs:
-	@if [ "$(RULE_DEP_LOGS)" != "" ]; then make $(RULE_DEP_LOGS); fi
+logs: $(RULE_DEP_LOGS)
 	$(RULE_CMD_LOGS)
