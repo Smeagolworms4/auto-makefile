@@ -20,6 +20,8 @@ ifeq ($(shell test -f COMPOSE_PATH=$(DOCKER_PATH)docker-compose.$(ENV).yml && ec
 	export COMPOSE_PATH=$(DOCKER_PATH)docker-compose.$(ENV).yml
 endif
 
+endif
+
 # Partial command #
 ifndef COMPOSE
 	export COMPOSE=docker-compose -f $(COMPOSE_PATH) -p $(DOCKER_NAME)
