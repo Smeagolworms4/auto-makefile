@@ -18,6 +18,10 @@ ifneq ($(ENV), dev)
     endif
 endif
 
+ifeq ($(shell test -f .env.local && echo -n yes),yes) 
+    include .env.local
+    export $(shell sed 's/=.*//' .env.local)
+endif
 
 ifndef USER_ID
 	export USER_ID=$(shell id -u)
