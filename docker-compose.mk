@@ -39,6 +39,12 @@ ifndef RULE_CMD_DOCKER_PULL
 	export RULE_CMD_DOCKER_PULL=$(COMPOSE) pull
 endif
 
+
+
+ifndef RULE_CMD_DOCKER_BUILD
+	export RULE_CMD_DOCKER_BUILD=$(COMPOSE) build
+endif
+
 ifndef RULE_CMD_UP
 	export RULE_CMD_UP=$(COMPOSE) up -d
 endif
@@ -62,6 +68,10 @@ endif
 ## Pull latest docker images
 docker-pull: $(RULE_DEP_DOCKER_PULL)
 	$(RULE_CMD_DOCKER_PULL)
+
+## Build compose file containers
+docker-build: $(RULE_DEP_DOCKER_BUILD)
+	$(RULE_CMD_DOCKER_BUILD)
 
 #################
 # Up containers #
