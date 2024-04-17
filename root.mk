@@ -6,19 +6,19 @@ ifndef ENV
 	ENV:=dev
 endif
 
-ifeq ($(shell test -f .env && echo -n yes),yes) 
+ifeq ($(wildcard .env),.env)
     include .env
     export $(shell sed 's/=.*//' .env)
 endif
 
 ifneq ($(ENV), dev)
-    ifeq ($(shell test -f .env.$(ENV) && echo -n yes),yes) 
+    ifeq ($(wildcard .env.$(ENV)),.env.$(ENV))
         include .env.$(ENV)
         export $(shell sed 's/=.*//' .env.$(ENV))
     endif
 endif
 
-ifeq ($(shell test -f .env.local && echo -n yes),yes) 
+ifeq ($(wildcard .env.local),.env.local)
     include .env.local
     export $(shell sed 's/=.*//' .env.local)
 endif
