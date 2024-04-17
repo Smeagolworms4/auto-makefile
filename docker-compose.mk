@@ -16,7 +16,7 @@ ifndef COMPOSE_PATH
 
 # Select docker compose from env #
 COMPOSE_PATH:=$(DOCKER_PATH)docker-compose.yml
-ifeq ($(shell test -f $(DOCKER_PATH)docker-compose.$(ENV).yml && echo -n yes),yes)
+ifeq ($(wildcard $(DOCKER_PATH)docker-compose.$(ENV).yml),$(DOCKER_PATH)docker-compose.$(ENV).yml)
 COMPOSE_PATH:=$(DOCKER_PATH)docker-compose.$(ENV).yml
 endif
 
