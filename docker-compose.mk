@@ -67,11 +67,15 @@ endif
 
 ## Pull latest docker images
 docker-pull: $(RULE_DEP_DOCKER_PULL)
+	$(RULE_CMD_DOCKER_PULL_BEFORE)
 	$(RULE_CMD_DOCKER_PULL)
+	$(RULE_CMD_DOCKER_PULL_AFTER)
 
 ## Build compose file containers
 docker-build: $(RULE_DEP_DOCKER_BUILD)
+	$(RULE_CMD_DOCKER_BUILD_BEFORE)
 	$(RULE_CMD_DOCKER_BUILD)
+	$(RULE_CMD_DOCKER_BUILD_AFTER)
 
 #################
 # Up containers #
@@ -79,7 +83,9 @@ docker-build: $(RULE_DEP_DOCKER_BUILD)
 
 ## Up all containers
 up: $(RULE_DEP_UP)
+	$(RULE_CMD_UP_BEFORE)
 	$(RULE_CMD_UP)
+	$(RULE_CMD_UP_AFTER)
 
 ###################
 # Down containers #
@@ -87,7 +93,9 @@ up: $(RULE_DEP_UP)
 
 ## Down all containers
 down: $(RULE_DEP_DOWN)
+	$(RULE_CMD_DOWN_BEFORE)
 	$(RULE_CMD_DOWN)
+	$(RULE_CMD_DOWN_AFTER)
 
 ###################
 # Logs containers #
@@ -95,4 +103,6 @@ down: $(RULE_DEP_DOWN)
 
 ## Display logs all containers
 logs: $(RULE_DEP_LOGS)
+	$(RULE_CMD_LOGS_BEFORE)
 	$(RULE_CMD_LOGS)
+	$(RULE_CMD_LOGS_AFTER)
