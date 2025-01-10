@@ -52,11 +52,14 @@ endif
 .PHONY: update-makefile
 ## Update all Makefiles script
 update-makefile: $(RULE_DEP_UPDATE_MAKEFILE)
+	$(RULE_CMD_UPDATE_MAKEFILE_BEFORE)
 	$(RULE_CMD_UPDATE_MAKEFILE)
+	$(RULE_CMD_UPDATE_MAKEFILE_AFTER)
 	
 .PHONY: help
 ## Help instructions
 help: $(RULE_DEP_HELP)
+	$(RULE_CMD_HELP_BEFORE)
 	@echo "\033[0;33mUsage:\033[0m"
 	@echo "     make [var_name=value ...] [target]\n"
 	@echo "\033[0;33mAvailable variables:\033[0m"
@@ -106,4 +109,5 @@ help: $(RULE_DEP_HELP)
 			echo -e \"\"\n\
 		done\
 	" | bash
+	$(RULE_CMD_HELP_AFTER)
 	
