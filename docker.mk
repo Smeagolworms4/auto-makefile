@@ -31,14 +31,20 @@ endif
 .PHONY: list
 ## List all containers
 list: $(RULE_DEP_LIST)
+	$(RULE_CMD_LIST_BEFORE)
 	$(RULE_CMD_LIST)
+	$(RULE_CMD_LIST_AFTER)
 
 .PHONY: killall
 ## Kill all containers for all projects
 killall: $(RULE_DEP_KILLALL)
+	$(RULE_CMD_KILLALL_BEFORE)
 	$(RULE_CMD_KILLALL)
+	$(RULE_CMD_KILLALL_AFTER)
 
 .PHONY: clean-none
 ## Remove unammed image
 clean-none: $(RULE_DEP_CLEANNONE)
+	$(RULE_CMD_CLEANNONE_BEFORE)
 	$(RULE_CMD_CLEANNONE)
+	$(RULE_CMD_CLEANNONE_AFTER)
