@@ -83,3 +83,21 @@ export RULE_DEP_CLEANNONE=rule1 rule2       # For command make clean-node
 ```
 
 
+### Add before or after on rules:
+```makefile
+# configuration #
+
+export RULE_CMD_UPDATE_MAKEFILE_BEFORE=echo "custom rule" # For command make update-makefile
+export RULE_CMD_LIST_BEFORE=echo "custom rule"            # For command make list
+export RULE_CMD_KILLALL_BEFORE=echo "custom rule"         # For command make killall
+export RULE_CMD_CLEANNONE_BEFORE=echo "custom rule"       # For command make clean-node
+
+export RULE_CMD_UPDATE_MAKEFILE_AFTER=echo "custom rule" # For command make update-makefile
+export RULE_CMD_LIST_AFTER=echo "custom rule"            # For command make list
+export RULE_CMD_KILLALL_AFTER=echo "custom rule"         # For command make killall
+export RULE_CMD_CLEANNONE_AFTER=echo "custom rule"       # For command make clean-node
+
+[...]
+```
+
+
