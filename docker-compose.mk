@@ -24,9 +24,9 @@ endif
 
 # Partial command #
 ifndef COMPOSE
-	export COMPOSE=docker-compose -f $(COMPOSE_PATH)
+	export COMPOSE=docker compose -f $(COMPOSE_PATH)
 ifdef DOCKER_NAME
-	export COMPOSE=docker-compose -f $(COMPOSE_PATH) -p $(DOCKER_NAME)	
+	export COMPOSE=docker compose -f $(COMPOSE_PATH) -p $(DOCKER_NAME)	
 endif
 endif
 
